@@ -15,7 +15,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-#include "velocity_smoother/velocity_smoother.hpp"
+#include "kobuki_velocity_smoother/velocity_smoother.hpp"
 
 int main(int argc, char** argv)
 {

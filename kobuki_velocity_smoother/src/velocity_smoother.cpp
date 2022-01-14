@@ -23,7 +23,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 
-#include "velocity_smoother/velocity_smoother.hpp"
+#include "kobuki_velocity_smoother/velocity_smoother.hpp"
 
 /*****************************************************************************
  ** Preprocessing
