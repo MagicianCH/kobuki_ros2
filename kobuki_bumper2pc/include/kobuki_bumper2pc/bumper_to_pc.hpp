@@ -47,8 +47,9 @@
  *****************************************************************************/
 
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/msg/PointCloud2.hpp>
-#include <kobuki_msgs/msg/SensorState.hpp>
+#include <rclcpp/subscription.hpp>
+#include <sensor_msgs/msg/point_cloud2.hpp>
+#include "kobuki_ros_interfaces/msg/sensor_state.hpp"
 
 /*****************************************************************************
  ** Namespace
@@ -63,15 +64,10 @@ namespace kobuki_bumper2pc
 class BumperToPC : public rclcpp::Node
 {
 public:
-  BumperToPC(rclcpp::NodeOptions &options)
-    : Node("bumper_to_pc", options),
-      P_INF_X(+100*sin(0.34906585)),
-      P_INF_Y(+100*cos(0.34906585)),
-      N_INF_Y(-100*cos(0.34906585)),
-      ZERO(0), prev_bumper(0), prev_cliff(0) { }
-  ~BumperToPC() { }
+  BumperToPC(const rclcpp::NodeOptions &options);
+  ~BumperToPC();
 
-  void onInit();
+  void init();
 
 private:
   const float P_INF_X;  // somewhere out of reach from the robot (positive x)
@@ -89,15 +85,15 @@ private:
   float n_side_y_;
 
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pc_pub_;
-  rclcpp::Subscription<kobuki_msgs::msg::SensorState>::SharedPtr sensor_sub_;
+  rclcpp::Subscription<kobuki_ros_interfaces::msg::SensorState>::SharedPtr sensor_sub_;
 
-  sensor_msgs::msgs::PointCloud2 pointcloud_;
+  sensor_msgs::msg::PointCloud2 pointcloud_;
 
   /**
    * @brief Core sensors state structure callback
    * @param msg incoming topic message
    */
-  void coreSensorCB(const kobuki_msgs::msg::SensorState::ConstSharedPtr msg);
+  void coreSensorCB(const kobuki_ros_interfaces::msg::SensorState::ConstSharedPtr msg);
 };
 
 } // namespace kobuki_bumper2pc
